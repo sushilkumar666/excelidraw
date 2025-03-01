@@ -67,12 +67,13 @@ function RoomCanvas() {
     const [lineShape, setLineShape] = useState<lineType[]>([]);
     const [arrowShape, setArrowShape] = useState<ArrowType[]>([]);
     const [inputData, setInputData] = useState<InputType[]>([]);
-    const [pencilPaths, setPencilPaths] = useState<PencilPathsType[][]>([]);
+    const [_pencilPaths, setPencilPaths] = useState<PencilPathsType[][]>([]);
     const [pencilShape, setPencilShape] = useState<PencilShapeType[]>([]);
     // let pencilShape = [];
     //@ts-ignore
     const { slug } = useParams<{ slug: string }>();
-    const [slugState, setSlugState] = useState<string | null>(slug ?? null);
+    const [slugState] = useState<string | null>(slug ?? null);
+
 
 
     // console.log(slugState + " this is slug value");
@@ -308,6 +309,7 @@ function RoomCanvas() {
                 setInputData(prev => [...prev, { text: message.text, cx: message.cx, cy: message.cy }])
                 // console.log(inputData)
             }
+                break;
             case 'pencil': {
                 //@ts-ignore
                 setPencilShape(message.message);
