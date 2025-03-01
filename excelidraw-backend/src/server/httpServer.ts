@@ -11,10 +11,21 @@ export const app = express();
 export const httpServer = () => {
     app.use(cookieParser());
     app.use(express.json());
+
+    const allowedOrigins = ["http://localhost:5173", "https://excelidraw.vercel.app"];
+
     app.use(
         cors({
-            origin: "http://localhost:5173", // Allow requests from this origin
-            credentials: true, // Allow cookies & authentication headers
+            origin: (origin, callback) => {
+                if (!origin || allowedOrigins.includes(origin)) {
+                    callback(null, origin);
+                } else {
+                    callback(new Error("Not allowed by CORS"));
+                }
+            },
+            credentials: true,
+            methods: ["GET", "POST", "PUT", "DELETE"],
+            allowedHeaders: ["Content-Type", "Authorization"],
         })
     );
 
