@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import Signup from './components/Signup.tsx'
@@ -6,7 +5,6 @@ import Signin from './components/Signin.tsx'
 import Home from './pages/Home.tsx'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import App from './App.tsx'
-import CanvaRoom from './pages/RoomCanvas.tsx'
 import RoomOption from './pages/RoomOption.tsx'
 import RoomCanvas from './pages/RoomCanvas.tsx'
 

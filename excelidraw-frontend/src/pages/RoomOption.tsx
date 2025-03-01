@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Pencil, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useForm } from 'react-hook-form'
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import slugify from "slugify";
 
 
 function RoomOption() {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pencil, Share2, Users, Lock, Github, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

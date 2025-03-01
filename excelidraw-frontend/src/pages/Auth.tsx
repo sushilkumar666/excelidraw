@@ -2,9 +2,8 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 
@@ -33,7 +32,7 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
         resolver: zodResolver(authType === 'signup' ? signupSchema : signinSchema)
     });
     const submitted = async (data: (signupType | signinType)) => {
-        console.log(data);
+        // console.log(data);
         let response;
         let result;
         showAuth === 'signup' ? response = await axios.post(`${BACKEND_URL}/api/signup`, data) :
@@ -43,11 +42,11 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
 
         if (showAuth !== 'signup') {
             token = result.token;
-            console.log(token + ' token form sign in')
+            // console.log(token + ' token form sign in')
         }
 
 
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
 
 
         if (!result.success) {
@@ -55,10 +54,10 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
         }
 
         if (showAuth === 'signup') {
-            console.log("inside signup")
+            // console.log("inside signup")
             navigate('/signin')
         } else {
-            console.log("inside sigin")
+            // console.log("inside sigin")
             navigate('/roomoption')
         }
     }
