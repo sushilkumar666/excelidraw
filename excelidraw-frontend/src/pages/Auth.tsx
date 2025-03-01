@@ -64,7 +64,7 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
 
     // const errorData = () => { console.log(JSON.stringify(errors) + " eror data.s") }
 
-    const [showAuth, setShowAuth] = useState<'signin' | 'signup' | null>(authType);
+    const [showAuth] = useState<'signin' | 'signup' | null>(authType);
 
     return (
         <>

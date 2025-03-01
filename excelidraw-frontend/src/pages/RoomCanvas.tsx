@@ -74,6 +74,7 @@ function RoomCanvas() {
     const { slug } = useParams<{ slug: string }>();
     const [slugState, setSlugState] = useState<string | null>(slug ?? null);
 
+
     // console.log(slugState + " this is slug value");
 
     const [ws, setWs] = useState<WebSocket>();
@@ -478,7 +479,7 @@ function RoomCanvas() {
             pencilShape?.forEach(shape => {
                 if (isEraserTouchingPencil(currentX, currentY, shape)) {
                     // console.log("eraser is toucning")
-                    erasePencil(currentX, currentY);
+                    erasePencil();
 
                 }
             })
@@ -624,7 +625,7 @@ function RoomCanvas() {
                 // console.log('Updated rectShape:', lines);
 
                 for (const ecllipse of prev) {
-                    if (isEraserTouchingLine(eraserX, eraserY, ecllipse)) {
+                    if (isTouchingEllipse(eraserX, eraserY, ecllipse)) {
                         erasedEcllipse.push(ecllipse);
                     } else {
                         updatedEcllipses.push(ecllipse);
@@ -704,31 +705,25 @@ function RoomCanvas() {
 
         }
 
-        function erasePencil(eraserX: number, eraserY: number) {
-            setPencilShape(prev => {
-                //@ts-ignore
-                // const text = pencilShape.filter(data => !isEraserTouchingPencil(eraserX, eraserY, data));
+        function erasePencil() {
 
+            ws?.send(JSON.stringify({
+                type: 'eraser',
+                slug: slugState,
+                shape: 'pencil',
+                message: {
 
-                ws?.send(JSON.stringify({
-                    type: 'eraser',
-                    slug: slugState,
-                    shape: 'pencil',
-                    message: {
+                    updatedShapes: []
+                }
+            }));
 
-                        updatedShapes: []
-                    }
-                }));
-
-                ws?.send(JSON.stringify({
-                    type: 'eraseBackend',
-                    slug: slugState,
-                    shape: 'pencil',
-                    message: pencilShape
-                }));
-
-                return [];
-            });
+            ws?.send(JSON.stringify({
+                type: 'eraseBackend',
+                slug: slugState,
+                shape: 'pencil',
+                message: pencilShape
+            }));
+            setPencilShape([]);
             // setPencilShape([])
         }
 

@@ -11,7 +11,7 @@ function RoomOption() {
     const [joinRoom, setJoinRoom] = useState<boolean>(false);
     const [joinRoomNotExists, setJoinRoomNotExists] = useState<boolean>(false);
     const [createRoomExists, setCreateRoomExists] = useState<boolean>(false);
-    const { register, handleSubmit, clearErrors, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
 
     const navigate = useNavigate();
 
@@ -41,7 +41,6 @@ function RoomOption() {
             }
             else {
                 setJoinRoomNotExists(true)
-                // setError("roomnotexists", { type: "manual", message: "room doesn't exists" });
             }
 
         } else {
@@ -49,7 +48,7 @@ function RoomOption() {
             if (roomexists.data.success) {
                 setCreateRoomExists(true)
                 // console.log("i am insdie test ")
-                // setError("roomexists", { type: "manual", message: "room already exists" });
+
             } else {
                 // slug = slugify(data.slug, { lower: true });
                 const newRoom = await axios.post(BACKEND_URL + '/api/createroom', data, { withCredentials: true });
