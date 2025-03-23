@@ -4,6 +4,7 @@ import middleware from "../middleware";
 import slugify from "slugify";
 import { slugToRoomId } from "../utils";
 
+
 const router = Router();
 
 
@@ -11,9 +12,9 @@ router.post('/roomexists', async (req: Request, res: Response) => {
     try {
         let { slug } = req.body;
         slug = slugify(slug, { lower: true });
-        const roomId = await slugToRoomId(slug);
+        const roomExists = await prisma.room.findFirst({ where: { slug: slug } });
 
-        if (roomId) {
+        if (roomExists) {
             res.json({ success: true, data: slug });
         } else {
             res.json({ success: false, data: "room doesn't exists" });
@@ -118,7 +119,7 @@ router.post(`/createroom`, middleware, async (req: Request, res: Response) => {
         console.log("step 3")
 
         res.json({
-            sucess: true,
+            success: true,
             message: "Room created successfully",
             data: newRoom
         })

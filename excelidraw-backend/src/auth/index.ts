@@ -60,6 +60,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
 router.post('/signin', async (req: Request, res: Response) => {
     try {
+        console.log(JSON.stringify(req.body) + " this is value of req.body");
         const parsedData = createSigninSchema.safeParse(req.body);
 
         if (!parsedData.success) {
@@ -72,8 +73,9 @@ router.post('/signin', async (req: Request, res: Response) => {
         }
         const password = parsedData.data.password;
 
-        const verifyPassword = bcrypt.compare(password, user.password);
+        const verifyPassword = await bcrypt.compare(password, user.password);
 
+        console.log(JSON.stringify(verifyPassword) + "this is value of verify password")
         if (!verifyPassword) {
             throw new Error("Invalid password");
         }

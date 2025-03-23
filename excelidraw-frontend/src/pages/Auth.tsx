@@ -21,18 +21,25 @@ const signinSchema = z.object({
     password: z.string()
 })
 type signinType = z.infer<typeof signinSchema>;
-
+interface ErrorType {
+    success?: boolean;
+    message?: string;
+}
 export let token: string | null | undefined;
 
 
 const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
     // const signup = true;
+    const [error, setError] = useState<ErrorType>({});
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<signupType | signinType>({
-        resolver: zodResolver(authType === 'signup' ? signupSchema : signinSchema)
+        resolver: zodResolver(authType === 'signup' ? signupSchema : signinSchema),
+        defaultValues: authType === 'signup'
+            ? { name: '', email: '', password: '' }  // Default values for signup
+            : { email: 'test1@gmail.com', password: '12345678' }
     });
     const submitted = async (data: (signupType | signinType)) => {
-        // console.log(data);
+        console.log(data);
         let response;
         let result;
         showAuth === 'signup' ? response = await axios.post(`${BACKEND_URL}/api/signup`, data) :
@@ -50,6 +57,9 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
 
 
         if (!result.success) {
+            console.log(result);
+            setError(result)
+            console.log(error);
             return
         }
 
@@ -82,6 +92,7 @@ const Auth = ({ authType }: { authType: ('signup' | 'signin') }) => {
                         <h2 className="text-2xl font-bold mb-6">
                             {showAuth === 'signin' ? 'Sign In' : 'Sign Up'}
                         </h2>
+                        {error?.success === false && <div className='text-red-500 flex justify-center'>{error?.message}</div>}
                         <form onSubmit={handleSubmit(submitted)} className="space-y-4">
                             {showAuth === 'signup' && (
                                 <div>

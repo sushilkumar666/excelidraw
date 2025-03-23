@@ -22,8 +22,8 @@ router.post('/roomexists', (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         let { slug } = req.body;
         slug = (0, slugify_1.default)(slug, { lower: true });
-        const roomId = yield (0, utils_1.slugToRoomId)(slug);
-        if (roomId) {
+        const roomExists = yield prismaClient_1.prisma.room.findFirst({ where: { slug: slug } });
+        if (roomExists) {
             res.json({ success: true, data: slug });
         }
         else {
@@ -111,7 +111,7 @@ router.post(`/createroom`, middleware_1.default, (req, res) => __awaiter(void 0,
         }
         console.log("step 3");
         res.json({
-            sucess: true,
+            success: true,
             message: "Room created successfully",
             data: newRoom
         });

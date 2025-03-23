@@ -6,12 +6,24 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 
 
+
 function RoomOption() {
+
+    type FormData = {
+        slug: string;
+
+    };
+
+
     const [showAuth, setShowAuth] = useState<boolean>(false);
     const [joinRoom, setJoinRoom] = useState<boolean>(false);
     const [joinRoomNotExists, setJoinRoomNotExists] = useState<boolean>(false);
     const [createRoomExists, setCreateRoomExists] = useState<boolean>(false);
-    const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
+    const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<FormData>({
+        defaultValues: {
+            slug: "room1",
+        }
+    });
 
     const navigate = useNavigate();
 

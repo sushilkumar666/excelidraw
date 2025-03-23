@@ -57,6 +57,7 @@ router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 router.post('/signin', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(JSON.stringify(req.body) + " this is value of req.body");
         const parsedData = authSchema_1.createSigninSchema.safeParse(req.body);
         if (!parsedData.success) {
             throw new Error('Invalid signin data');
@@ -66,7 +67,8 @@ router.post('/signin', (req, res) => __awaiter(void 0, void 0, void 0, function*
             throw new Error("user not found");
         }
         const password = parsedData.data.password;
-        const verifyPassword = bcryptjs_1.default.compare(password, user.password);
+        const verifyPassword = yield bcryptjs_1.default.compare(password, user.password);
+        console.log(JSON.stringify(verifyPassword) + "this is value of verify password");
         if (!verifyPassword) {
             throw new Error("Invalid password");
         }
