@@ -148,7 +148,7 @@ function RoomCanvas() {
         settingCtx();
 
         //@ts-ignore
-        const wsc = new WebSocket(`wss://excelidraw-backend.sanatansuccess.com?token=${token}`);
+        const wsc = new WebSocket(`wss://sushilkumar666.shop?token=${token}`);
         setWs(wsc);
         wsc.onopen = () => {
             // console.log("joining room...");
@@ -832,7 +832,7 @@ function RoomCanvas() {
 
             return (
                 eraserX >= textLeft && eraserX <= textRight &&
-                eraserY >= textTop && eraserY <= textBottom
+                eraserY >= textTop && eraserY + 10 <= textBottom
             );
         }
 
